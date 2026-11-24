@@ -65,7 +65,7 @@
   .bb-clock{font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px}
   .dot{width:6px;height:6px;border-radius:50%;background:#FC3224;display:inline-block}
   .eyebrow{margin:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
-  h1{margin:0;font-weight:700;font-size:clamp(34px,4.3vw,64px);line-height:.95;letter-spacing:-0.02em;text-transform:uppercase;max-width:15.5em;text-wrap:balance;color:var(--c-head)}
+  h1{margin:0;font-weight:700;font-size:clamp(32px,3.75vw,54px);line-height:1.08;letter-spacing:-0.02em;text-transform:uppercase;max-width:15.5em;text-wrap:balance;color:var(--c-head)}
     .lede{margin:0;font-size:clamp(18px,1.25vw,24px);line-height:1.4;font-weight:500;letter-spacing:0;color:var(--c-head);max-width:470px;flex:0 1 470px;text-wrap:pretty}
   .sub{margin:0;font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:#A9B0B6}
   .sub em{color:var(--paper);font-style:italic}
@@ -127,13 +127,16 @@
   <div class="stage" aria-hidden="true">
     <svg class="bigmark" id="bigmark" viewBox="0 0 567.63 343.7">
       <defs>
-        <pattern id="lineg" patternUnits="userSpaceOnUse" x="0" y="0" width="567.63" height="343.7"><image class="gimg" x="0" y="0" width="567.63" height="343.7" preserveAspectRatio="none"/></pattern><clipPath id="bigq"><path d="M487.93,145.3h0l-2.8,16.62c-7.16,36.93-38.09,62-74.77,63.4h-98.3a51.19,51.19,0,0,1-8.86-.48c15.21-21.77,26-44.67,30.41-71.06s2.07-51.24-5.79-73a79.63,79.63,0,0,1,9.06-.88h98.3a51.79,51.79,0,0,1,42,19.43A54.7,54.7,0,0,1,487.93,145.3Z"/></clipPath>
+        <pattern id="lineg" patternUnits="userSpaceOnUse" x="0" y="0" width="567.63" height="343.7"><image class="gimg" x="0" y="0" width="567.63" height="343.7" preserveAspectRatio="none"/></pattern><filter id="lblur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="lbBlur" stdDeviation="8"/></filter>
+        <linearGradient id="fillfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".12" stop-color="#fff" stop-opacity="1"/></linearGradient>
+        <mask id="fillmask" maskUnits="userSpaceOnUse" x="-40" y="-80" width="650" height="520"><rect id="fillrect" x="-40" y="380" width="650" height="440" fill="url(#fillfade)"/></mask>
+        <clipPath id="bigq"><path d="M487.93,145.3h0l-2.8,16.62c-7.16,36.93-38.09,62-74.77,63.4h-98.3a51.19,51.19,0,0,1-8.86-.48c15.21-21.77,26-44.67,30.41-71.06s2.07-51.24-5.79-73a79.63,79.63,0,0,1,9.06-.88h98.3a51.79,51.79,0,0,1,42,19.43A54.7,54.7,0,0,1,487.93,145.3Z"/></clipPath>
         <mask id="pour" maskUnits="userSpaceOnUse" x="0" y="0" width="567.63" height="343.7">
           <path id="wave" fill="#fff" d=""/>
         </mask>
       </defs>
-      <path id="markfill" fill="#F4F5F3" d="M446.8,0H352.17a166.72,166.72,0,0,0-76,18.85C256.78,6.69,235.69,0,209.59,0H48.71L36,80h160.1a58.47,58.47,0,0,1,47.37,22c11.64,14.42,14.63,33.63,10.65,51.91-8.06,41.66-41.46,70.12-82.85,71.72H12.67L0,305.55H157.83c26.22,0,52.1-7,75.66-19.26,18.75,12,41.54,18.93,67,18.93h71.81l24.46,38.48H499.51L463.9,288.61C514,264,553.82,216.62,563.35,160l2.16-12.87C579.14,66.23,525.72,0,446.8,0Zm41.13,145.3h0l-2.8,16.62c-7.16,36.93-38.09,62-74.77,63.4h-98.3a51.19,51.19,0,0,1-8.86-.48c15.21-21.77,26-44.67,30.41-71.06s2.07-51.24-5.79-73a79.63,79.63,0,0,1,9.06-.88h98.3a51.79,51.79,0,0,1,42,19.43A54.7,54.7,0,0,1,487.93,145.3Z"/>
-      <path id="markline" fill="none" stroke="url(#lineg)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" d="M 396.76,343.70 L 499.51,343.70 L 463.9,288.61 C 514.0,264.0 553.82,216.62 563.35,160.0 L 565.51,147.13 C 579.14,66.23 525.72,0.0 446.8,0.0 L 352.17,0.0 A 166.72,166.72 0.0 0,0 276.17,18.85 C 256.78,6.69 235.69,0.0 209.59,0.0 L 48.71,0.0 L 36.0,80.0 L 196.1,80.0 A 58.47,58.47 0.0 0,1 243.47,102.0 C 255.11,116.42 258.1,135.63 254.12,153.91 C 246.06,195.57 212.66,224.03 171.27,225.63 L 12.67,225.63 L 0.0,305.55 L 157.83,305.55 C 184.05,305.55 209.93,298.55 233.49,286.29 C 252.24,298.29 275.03,305.22 300.49,305.22 L 372.3,305.22 L 396.76,343.70 Z M 487.93,145.3 L 487.93,145.3 L 485.13,161.92 C 477.96,198.85 447.03,223.92 410.36,225.32 L 312.06,225.32 A 51.19,51.19 0.0 0,1 303.2,224.84 C 318.40,203.07 329.2,180.17 333.61,153.78 C 338.02,127.39 335.68,102.54 327.82,80.78 A 79.63,79.63 0.0 0,1 336.88,79.90 L 435.18,79.90 A 51.79,51.79 0.0 0,1 477.18,99.33 A 54.7,54.7 0.0 0,1 487.93,145.3 Z"/>
+      <path id="markfill" fill="#FFFFFF" d="M446.8,0H352.17a166.72,166.72,0,0,0-76,18.85C256.78,6.69,235.69,0,209.59,0H48.71L36,80h160.1a58.47,58.47,0,0,1,47.37,22c11.64,14.42,14.63,33.63,10.65,51.91-8.06,41.66-41.46,70.12-82.85,71.72H12.67L0,305.55H157.83c26.22,0,52.1-7,75.66-19.26,18.75,12,41.54,18.93,67,18.93h71.81l24.46,38.48H499.51L463.9,288.61C514,264,553.82,216.62,563.35,160l2.16-12.87C579.14,66.23,525.72,0,446.8,0Zm41.13,145.3h0l-2.8,16.62c-7.16,36.93-38.09,62-74.77,63.4h-98.3a51.19,51.19,0,0,1-8.86-.48c15.21-21.77,26-44.67,30.41-71.06s2.07-51.24-5.79-73a79.63,79.63,0,0,1,9.06-.88h98.3a51.79,51.79,0,0,1,42,19.43A54.7,54.7,0,0,1,487.93,145.3Z"/>
+      <path id="markline" fill="none" stroke="#FFFFFF" stroke-opacity=".6" filter="url(#lblur)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" d="M 396.76,343.70 L 499.51,343.70 L 463.9,288.61 C 514.0,264.0 553.82,216.62 563.35,160.0 L 565.51,147.13 C 579.14,66.23 525.72,0.0 446.8,0.0 L 352.17,0.0 A 166.72,166.72 0.0 0,0 276.17,18.85 C 256.78,6.69 235.69,0.0 209.59,0.0 L 48.71,0.0 L 36.0,80.0 L 196.1,80.0 A 58.47,58.47 0.0 0,1 243.47,102.0 C 255.11,116.42 258.1,135.63 254.12,153.91 C 246.06,195.57 212.66,224.03 171.27,225.63 L 12.67,225.63 L 0.0,305.55 L 157.83,305.55 C 184.05,305.55 209.93,298.55 233.49,286.29 C 252.24,298.29 275.03,305.22 300.49,305.22 L 372.3,305.22 L 396.76,343.70 Z M 487.93,145.3 L 487.93,145.3 L 485.13,161.92 C 477.96,198.85 447.03,223.92 410.36,225.32 L 312.06,225.32 A 51.19,51.19 0.0 0,1 303.2,224.84 C 318.40,203.07 329.2,180.17 333.61,153.78 C 338.02,127.39 335.68,102.54 327.82,80.78 A 79.63,79.63 0.0 0,1 336.88,79.90 L 435.18,79.90 A 51.79,51.79 0.0 0,1 477.18,99.33 A 54.7,54.7 0.0 0,1 487.93,145.3 Z"/>
     </svg>
   </div>
 </section>
@@ -212,6 +215,7 @@ function playIntro(){
   // reset
   gsap.set(big, { x: 0, y: 0, scale: 1, autoAlpha: 1 });
   gsap.set('#markline', { drawSVG: '0%', autoAlpha: 1 });
+  gsap.set('#lbBlur', { attr: { stdDeviation: 8 } });
   gsap.set('#markfill', { fillOpacity: 0 });
   gsap.set(wave, { y: 250, x: 0 });
   gsap.set(['#navmark', '#orb'], { autoAlpha: 0 });
@@ -225,9 +229,10 @@ function playIntro(){
 
   // 1 · outlines draw on
   intro.to('#markline', { drawSVG: '100%', duration: 1.8, ease: 'power2.inOut' })
+       .to('#lbBlur', { attr: { stdDeviation: 0 }, duration: 1.9, ease: 'power2.out' }, '<')
   // 2 · the mark solidifies
-       .to('#markfill', { fillOpacity: 1, duration: .7, ease: 'power1.out' }, '-=.15')
-       .to('#markline', { autoAlpha: 0, duration: .5 }, '+=.15')
+       // the white fill fades in from 0 to 100%
+       .to('#markfill', { fillOpacity: 1, duration: .8, ease: 'power1.inOut' }, '-=.2')
   // 4 · smooth glide to the top-left: separate eases on x and y give a gentle arc
        .addLabel('dock', '+=.35')
        .to(big, { x: () => target(big).x, duration: 1.6, ease: 'expo.inOut' }, 'dock')
