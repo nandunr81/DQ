@@ -80,9 +80,85 @@
   .note{position:fixed;right:20px;bottom:72px;z-index:10;text-align:right;font-size:12px;color:var(--steel);max-width:320px;line-height:1.5}
   @media (max-width:768px){h1{white-space:normal}.bb-clock{display:none}}
   #orb{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;visibility:hidden}
+
+  /* preloader */
+  #preloader{position:fixed;inset:0;z-index:100;background:#121212;color:var(--paper);display:flex;flex-direction:column;justify-content:flex-end;
+    padding:0 3.6rem clamp(28px,5vh,56px);clip-path:inset(0 0 0 0)}
+  #preloader .pl-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+  #preloader .pl-count{font-family:'Inter Tight',system-ui,sans-serif;font-weight:100;font-size:clamp(64px,9vw,160px);line-height:.85;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+  #preloader .pl-label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A9B0B6;padding-bottom:10px}
+  #preloader .pl-bar{position:relative;height:2px;margin-top:28px;margin-inline:-3.6rem;background:rgba(244,245,243,.16);overflow:hidden}
+  #preloader .pl-fill{position:absolute;inset:0;clip-path:inset(0 100% 0 0);background:linear-gradient(90deg,#391C48 0.0%,#5A1740 12.5%,#A7112A 25.0%,#DF111D 37.5%,#E82529 50.0%,#BC6061 62.5%,#7B828A 75.0%,#497383 87.5%,#32667B 100.0%)}
+  @media (max-width:767px){#preloader{padding:0 1.25rem 32px}#preloader .pl-bar{margin-inline:-1.25rem}}
+  html.is-loading,html.is-loading body{overflow:hidden}
 </style>
 </head>
 <body>
+<div id="preloader" role="status" aria-live="polite" aria-label="Loading Digi Quarters">
+  <div class="pl-row">
+    <div class="pl-count" id="plCount">0%</div>
+    <div class="pl-label" id="plLabel">Loading</div>
+  </div>
+  <div class="pl-bar" aria-hidden="true"><div class="pl-fill" id="plFill"></div></div>
+</div>
+<script>
+/* Preloader: tracks what the hero really needs, then hands over to the intro.
+   Progress only moves when a task finishes; the counter eases towards it so it never jumps. */
+(function(){
+  document.documentElement.classList.add('is-loading');
+  const tasks = { dom: 10, fonts: 25, libs: 15, background: 35, page: 15 };
+  const done = {};
+  let target = 0, shown = 0, finished = false, startedAt = performance.now();
+  let resolveReady; window.DQ_READY = new Promise(r => resolveReady = r);
+  const countEl = document.getElementById('plCount'), fillEl = document.getElementById('plFill'), labelEl = document.getElementById('plLabel');
+  const labels = { dom: 'Structure', fonts: 'Type', libs: 'Motion', background: '3D scene', page: 'Assets' };
+
+  window.DQ_PRELOAD = function(name){
+    if (done[name] || !(name in tasks)) return;
+    done[name] = true;
+    target = Object.keys(done).reduce((a, k) => a + tasks[k], 0);
+    const next = Object.keys(tasks).find(k => !done[k]);
+    labelEl.textContent = next ? 'Loading ' + labels[next].toLowerCase() : 'Ready';
+  };
+
+  let last = performance.now();
+  function frame(now){
+    const dt = Math.min((now - last) / 1000, .1); last = now;
+    shown += (target - shown) * (1 - Math.exp(-dt * 7));   // time-based, so slow devices still finish on time
+    if (target - shown < .4) shown = target;
+    const v = Math.round(shown);
+    countEl.textContent = v + '%';
+    fillEl.style.clipPath = 'inset(0 ' + (100 - shown) + '% 0 0)';
+    if (v >= 100 && !finished) { finished = true; exit(); return; }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function exit(){
+    const wait = Math.max(0, 900 - (performance.now() - startedAt));   // avoid a flash on fast connections
+    setTimeout(() => {
+      const el = document.getElementById('preloader');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.documentElement.classList.remove('is-loading');
+      resolveReady();
+      if (window.gsap && !reduce) {
+        gsap.to(el, { clipPath: 'inset(0 0 100% 0)', duration: .9, ease: 'power3.inOut', onComplete: () => el.remove() });
+      } else { el.remove(); }
+    }, wait + 250);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    DQ_PRELOAD('dom');
+    if (window.gsap && window.SplitText && window.DrawSVGPlugin) DQ_PRELOAD('libs');
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => DQ_PRELOAD('fonts'));
+  });
+  window.addEventListener('load', () => DQ_PRELOAD('page'));
+  window.addEventListener('dq:bg', () => DQ_PRELOAD('background'));
+  if (!('WebGLRenderingContext' in window)) DQ_PRELOAD('background');
+  // safety net: never hold visitors for more than 8s, e.g. if WebGL or a CDN fails
+  setTimeout(() => Object.keys(tasks).forEach(k => DQ_PRELOAD(k)), 8000);
+})();
+</script>
 <section class="hero" id="hero">
   <canvas id="orb" aria-hidden="true"></canvas>
 
@@ -109,7 +185,6 @@
   <div class="content wrap">
     <div class="herorow">
       <div class="herotitle">
-        <p class="tag">[ Your digital quarters ]</p>
         <h1 id="headline">A design &amp; engineering studio where good ideas move in and ship out.</h1>
       </div>
       <p class="lede">We design and build websites, digital products and apps — one team from first sketch to launch day. No hand-offs, no gaps — just work that holds up.</p>
@@ -172,7 +247,7 @@ gsap.registerPlugin(DrawSVGPlugin, SplitText);
 })();
 
 // split the headline once; mark the last word for the gradient sweep
-document.fonts.ready.then(() => {
+document.fonts.ready.then(() => window.DQ_READY).then(() => {
   const head = SplitText.create('#headline', { type: 'words,chars' });
   const lede = SplitText.create('.lede', { type: 'words' });
   window.__chars = head.chars;
@@ -198,7 +273,7 @@ function init(){
 
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set('#bigmark', { autoAlpha: 0 });
-    gsap.set(['#orb', '#navmark', '#wordmark path', '.navbar', '.navcta', '.tag', '#bottombar', window.__chars, window.__lede], { autoAlpha: 1, clearProps: 'transform' });
+    gsap.set(['#orb', '#navmark', '#wordmark path', '.navbar', '.navcta', '#bottombar', window.__chars, window.__lede], { autoAlpha: 1, clearProps: 'transform' });
     gsap.set('#nwave', { y: 0 });
     gsap.set([window.__chars, window.__lede], { filter: 'none' });
   });
@@ -223,7 +298,7 @@ function playIntro(){
   gsap.set(wave, { y: 250, x: 0 });
   gsap.set(['#navmark', '#orb'], { autoAlpha: 0 });
   gsap.set(links, { autoAlpha: 0, y: -14 });
-  gsap.set(['.tag', '#bottombar'], { autoAlpha: 0 });
+  gsap.set(['#bottombar'], { autoAlpha: 0 });
   gsap.set('#bottombar', { y: 16 });
   gsap.set(letters, { autoAlpha: 0, y: 60 });
   gsap.set([chars, ledeWords], { autoAlpha: 0, filter: 'blur(14px)', y: 6 });
@@ -252,7 +327,6 @@ function playIntro(){
        .to(links, { autoAlpha: 1, y: 0, duration: .7, stagger: .07 }, 'dock+=1.6')
   // headline and line two resolve from blur to clear
        .to(chars, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.1, stagger: .035, ease: 'power2.out' }, 'dock+=1.8')
-       .to('.tag', { autoAlpha: 1, duration: .6 }, 'dock+=1.7')
        .to(ledeWords, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, stagger: .05, ease: 'power2.out' }, '-=.7')
        .to('#bottombar', { autoAlpha: 1, y: 0, duration: .8 }, '-=.6')
        .add(startGlow, 'dock+=3.2')
@@ -292,7 +366,7 @@ const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
 camera.position.set(0, 2.2, 6.5);
 camera.lookAt(0, .12, 0);
 
-const tex = new THREE.TextureLoader().load(GRAD, () => render());
+const tex = new THREE.TextureLoader().load(GRAD, () => { renderer.compile(scene, camera); render(); window.dispatchEvent(new Event('dq:bg')); });
 tex.colorSpace = THREE.SRGBColorSpace;
 tex.wrapS = tex.wrapT = THREE.MirroredRepeatWrapping;
 
