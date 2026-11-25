@@ -75,31 +75,28 @@
 
   /* idea 1 — the big mark that builds itself */
   .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
-  .bigmark{width:min(52vw,560px);height:auto;overflow:visible;transform-origin:0 0}
+  .bigmark{width:min(26vw,280px);height:auto;overflow:visible;transform-origin:0 0}
 
   .note{position:fixed;right:20px;bottom:72px;z-index:10;text-align:right;font-size:12px;color:var(--steel);max-width:320px;line-height:1.5}
   @media (max-width:768px){h1{white-space:normal}.bb-clock{display:none}}
   #orb{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;visibility:hidden}
 
   /* preloader */
-  #preloader{position:fixed;inset:0;z-index:100;background:#121212;color:var(--paper);display:flex;flex-direction:column;justify-content:flex-end;
-    padding:0 3.6rem clamp(28px,5vh,56px);clip-path:inset(0 0 0 0)}
-  #preloader .pl-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
-  #preloader .pl-count{font-family:'Inter Tight',system-ui,sans-serif;font-weight:100;font-size:clamp(64px,9vw,160px);line-height:.85;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
-  #preloader .pl-label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A9B0B6;padding-bottom:10px}
-  #preloader .pl-bar{position:relative;height:2px;margin-top:28px;margin-inline:-3.6rem;background:rgba(244,245,243,.16);overflow:hidden}
-  #preloader .pl-fill{position:absolute;inset:0;clip-path:inset(0 100% 0 0);background:linear-gradient(90deg,#391C48 0.0%,#5A1740 12.5%,#A7112A 25.0%,#DF111D 37.5%,#E82529 50.0%,#BC6061 62.5%,#7B828A 75.0%,#497383 87.5%,#32667B 100.0%)}
-  @media (max-width:767px){#preloader{padding:0 1.25rem 32px}#preloader .pl-bar{margin-inline:-1.25rem}}
+  #preloader{position:fixed;inset:0;z-index:100;background:#121212;color:var(--paper);clip-path:inset(0 0 0 0)}
+  #preloader .pl-count,#preloader .pl-label{position:absolute;top:50%;transform:translateY(-50%)}
+  #preloader .pl-count{left:calc(50% + 14px);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--paper);font-variant-numeric:tabular-nums;text-align:left;min-width:4ch}
+  #preloader .pl-label{right:calc(50% + 14px);text-align:right;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A9B0B6;white-space:nowrap}
+  #preloader .pl-bar{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:rgba(244,245,243,.12)}
+  #preloader .pl-fill{position:absolute;inset:0;clip-path:inset(100% 0 0 0);background:linear-gradient(0deg,#391C48 0%,#5A1740 12.5%,#A7112A 25%,#DF111D 37.5%,#E82529 50%,#BC6061 62.5%,#7B828A 75%,#497383 87.5%,#32667B 100%)}
+  @media (max-width:767px){#preloader .pl-count{left:calc(50% + 12px)}#preloader .pl-label{right:calc(50% + 12px)}}
   html.is-loading,html.is-loading body{overflow:hidden}
 </style>
 </head>
 <body>
 <div id="preloader" role="status" aria-live="polite" aria-label="Loading Digi Quarters">
-  <div class="pl-row">
-    <div class="pl-count" id="plCount">0%</div>
-    <div class="pl-label" id="plLabel">Loading</div>
-  </div>
   <div class="pl-bar" aria-hidden="true"><div class="pl-fill" id="plFill"></div></div>
+  <div class="pl-count" id="plCount">0%</div>
+  <div class="pl-label" id="plLabel">Loading</div>
 </div>
 <script>
 /* Preloader: tracks what the hero really needs, then hands over to the intro.
@@ -128,7 +125,7 @@
     if (target - shown < .4) shown = target;
     const v = Math.round(shown);
     countEl.textContent = v + '%';
-    fillEl.style.clipPath = 'inset(0 ' + (100 - shown) + '% 0 0)';
+    fillEl.style.clipPath = 'inset(' + (100 - shown) + '% 0 0 0)';
     if (v >= 100 && !finished) { finished = true; exit(); return; }
     requestAnimationFrame(frame);
   }
