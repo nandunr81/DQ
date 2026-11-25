@@ -26,9 +26,11 @@
   @media (max-width:768px){h1{white-space:normal}}
   nav.topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding-top:48px;padding-bottom:24px}
   .home{justify-self:start;display:block}
-  .mono,.navbar a,.navcta,.tag,.bottombar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .mono,.tag,.bottombar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .navbar a,.navcta{font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;font-weight:500;letter-spacing:.04em;text-transform:none}
+  .navbar a,.navcta{text-transform:uppercase;font-size:14px;letter-spacing:.06em}
   .navlogo{display:block;height:40px;width:auto;overflow:visible}
-  .navbar{display:flex;align-items:center;gap:40px;height:60px;padding:0 36px;background:#1C1C1C;border-radius:6px}
+  .navbar{display:flex;align-items:center;gap:40px;height:60px;padding:0 36px}
   .navbar a{text-decoration:none;color:#D6DADD;display:inline-flex;align-items:center;min-height:44px}
   .navbar a:hover{color:var(--paper)}
   .navcta{justify-self:end;position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:space-between;gap:18px;height:60px;padding:0 24px;min-width:220px;border-radius:6px;text-decoration:none;
@@ -66,7 +68,7 @@
   .dot{width:6px;height:6px;border-radius:50%;background:#FC3224;display:inline-block}
   .eyebrow{margin:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
   h1{margin:0;font-weight:700;font-size:clamp(32px,3.75vw,54px);line-height:1.08;letter-spacing:-0.02em;text-transform:uppercase;max-width:15.5em;text-wrap:balance;color:var(--c-head)}
-    .lede{margin:0;font-size:clamp(18px,1.25vw,24px);line-height:1.4;font-weight:500;letter-spacing:0;color:var(--c-head);max-width:470px;flex:0 1 470px;text-wrap:pretty}
+    .lede{margin:0;font-size:clamp(18px,1.25vw,24px);line-height:1.4;font-weight:400;letter-spacing:0.48px;color:var(--c-head);max-width:470px;flex:0 1 470px;text-wrap:pretty}
   .sub{margin:0;font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:#A9B0B6}
   .sub em{color:var(--paper);font-style:italic}
 
