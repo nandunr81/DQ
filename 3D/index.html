@@ -96,13 +96,13 @@
   .navcta{--ic:40px;--pr:10px;padding-right:var(--pr)}
   .navcta::before{content:"";position:absolute;z-index:-1;top:50%;right:var(--pr);width:var(--ic);height:var(--ic);border-radius:calc(var(--ic) / 2);transform:translateY(-50%);
     background-image:var(--grad);background-size:280px 100%;background-position:right center;opacity:0;
-    transition:width .55s cubic-bezier(.65,0,.25,1),opacity .2s ease}
-  .navcta:hover::before,.navcta:focus-visible::before{opacity:1;width:calc(100% - var(--pr))}
+    transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease .5s}
+  .navcta:hover::before,.navcta:focus-visible::before{opacity:1;width:calc(100% - var(--pr));transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease}
   .navcta>span:first-child{transition:text-shadow .4s}
   .navcta:hover>span:first-child,.navcta:focus-visible>span:first-child{text-shadow:0 1px 3px rgba(0,0,0,.35)}
-  .cta-ic{display:inline-grid;place-items:center;width:var(--ic);height:var(--ic);border-radius:50%;background:#fff;color:#121212;flex:none;transition:background-color .2s ease,color .2s ease}
+  .cta-ic{display:inline-grid;place-items:center;width:var(--ic);height:var(--ic);border-radius:50%;background:#fff;color:#121212;flex:none;transition:background-color .15s ease .5s,color .15s ease .5s}
   .cta-ic svg{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-  .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{background-color:transparent;color:#fff}
+  .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{background-color:transparent;color:#fff;transition:background-color .15s ease,color .15s ease}
   .navcta:hover .cta-ic svg{transform:translateX(2px)}
   @media (max-width:768px){.navcta{font-size:15px;--ic:36px;--pr:6px}}
 </style>
