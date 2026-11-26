@@ -95,7 +95,7 @@
   /* CTA: on hover the gradient starts in the circle and grows left into a capsule */
   .navcta{--ic:40px;--pr:10px;padding-right:var(--pr)}
   .navcta::before{content:"";position:absolute;z-index:-1;top:50%;right:var(--pr);width:var(--ic);height:var(--ic);border-radius:calc(var(--ic) / 2);transform:translateY(-50%);
-    background-image:var(--grad);background-size:280px 100%;background-position:right center;opacity:0;
+    background-image:var(--grad);background-size:600px 300%;background-position:right 30%;opacity:0;
     transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease .5s}
   .navcta:hover::before,.navcta:focus-visible::before{opacity:1;width:calc(100% - var(--pr));transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease}
   .navcta>span:first-child{transition:text-shadow .4s}
