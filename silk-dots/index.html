@@ -89,6 +89,10 @@
   .navcta:hover>span:first-child,.navcta:focus-visible>span:first-child{text-shadow:0 1px 3px rgba(0,0,0,.35)}
   .cta-ic{display:inline-grid;place-items:center;width:var(--ic);height:var(--ic);border-radius:50%;background:#fff;color:#121212;flex:none;transition:background-color .15s ease .5s,color .15s ease .5s}
   .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{background-color:transparent;color:#fff;transition:background-color .15s ease,color .15s ease}
+  /* the gradient drifts while hovered, like the logo's Q */
+  @keyframes ctaflow{0%{background-position:100% 62%}25%{background-position:78% 78%}50%{background-position:58% 64%}75%{background-position:82% 48%}100%{background-position:100% 62%}}
+  .navcta::before{animation:ctaflow 7s ease-in-out infinite;animation-play-state:paused}
+  .navcta:hover::before,.navcta:focus-visible::before{animation-play-state:running}
   @media (max-width:768px){.navcta{font-size:15px;--ic:30px;--pr:9px}}
 </style>
 </head>
