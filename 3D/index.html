@@ -90,15 +90,6 @@
   #preloader .pl-fill{position:absolute;inset:0;clip-path:inset(100% 0 0 0);background:linear-gradient(0deg,#391C48 0%,#5A1740 12.5%,#A7112A 25%,#DF111D 37.5%,#E82529 50%,#BC6061 62.5%,#7B828A 75%,#497383 87.5%,#32667B 100%)}
   @media (max-width:767px){#preloader .pl-count{left:calc(50% + 12px)}#preloader .pl-label{right:calc(50% + 12px)}}
   html.is-loading,html.is-loading body{overflow:hidden}
-  .dragcue{position:fixed;left:0;top:0;z-index:50;pointer-events:none;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;
-    border:1px solid rgba(244,245,243,.45);display:flex;align-items:center;justify-content:center;opacity:0;
-    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--paper);
-    transition:opacity .3s, width .3s, height .3s, margin .3s, background .3s;backdrop-filter:blur(2px)}
-  .dragcue.show{opacity:1}
-  @media (pointer: fine){.hero{cursor:grab}}
-  .hero.is-dragging{cursor:grabbing;user-select:none}
-  .hero.is-dragging ~ .dragcue,.dragcue.show.is-held{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(244,245,243,.08)}
-  @media (pointer: coarse){.dragcue{display:none}}
 </style>
 </head>
 <body>
@@ -224,7 +215,6 @@
     </svg>
   </div>
 </section>
-<div class="dragcue" id="dragcue" aria-hidden="true">Drag</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -498,29 +488,8 @@ const ray = new THREE.Raycaster(), proxy = new THREE.Mesh(new THREE.PlaneGeometr
 proxy.rotation.copy(surface.rotation); proxy.position.copy(surface.position); proxy.updateMatrixWorld();
 const aim = new THREE.Vector2(0, 0), pos = new THREE.Vector2(0, 0);
 const fine = matchMedia('(pointer: fine)').matches;
-let dragging = false, press = 0, yaw = 0, yawT = 0, pitch = 0, pitchT = 0, lastX = 0, lastY = 0;
-const cue = document.getElementById('dragcue');
-const isUI = el => el && el.closest && el.closest('a, button, nav, .lede, h1');
-if (fine) {
-  hero.addEventListener('pointerdown', e => {
-    if (e.button !== 0 || isUI(e.target)) return;
-    dragging = true; lastX = e.clientX; lastY = e.clientY;
-    hero.classList.add('is-dragging'); hero.setPointerCapture(e.pointerId);
-  });
-  hero.addEventListener('pointermove', e => {
-    const over = !isUI(e.target);
-    cue.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    cue.classList.toggle('show', over || dragging);
-    if (!dragging) return;
-    yawT = THREE.MathUtils.clamp(yawT - (e.clientX - lastX) * .0035, -.75, .75);
-    pitchT = THREE.MathUtils.clamp(pitchT + (e.clientY - lastY) * .004, -.6, .9);
-    lastX = e.clientX; lastY = e.clientY;
-  });
-  const release = () => { dragging = false; yawT = 0; pitchT = 0; hero.classList.remove('is-dragging'); };
-  hero.addEventListener('pointerup', release);
-  hero.addEventListener('pointercancel', release);
-  hero.addEventListener('pointerleave', () => cue.classList.remove('show'));
-}
+let press = 0, yaw = 0, pitch = 0;
+const prev = new THREE.Vector2();
 function tick(){
   if (!running) return;
   uniforms.uTime.value = clock.getElapsedTime();
@@ -531,11 +500,12 @@ function tick(){
   pos.lerp(aim, .04);
   uniforms.uMouse.value.copy(pos);
   mouse.lerp(target, .035);
-  // press eases in while held; the view eases back to rest when released
-  press += ((dragging ? 1 : 0) - press) * .06;
+  // cursor movement alone steers the view and lifts the silk; moving faster lifts it more
+  const speed = fine ? Math.min(target.distanceTo(prev) * 22, 1) : 0; prev.copy(target);
+  press += (Math.max(speed, fine ? .35 : 0) - press) * .05;
   uniforms.uPush.value = press;
-  yaw += (yawT - yaw) * (dragging ? .12 : .045);
-  pitch += (pitchT - pitch) * (dragging ? .12 : .045);
+  yaw += ((fine ? -target.x * .55 : 0) - yaw) * .04;
+  pitch += ((fine ? target.y * .35 : 0) - pitch) * .04;
   const r = 6.5, bx = mouse.x * 1.1;
   camera.position.set(bx * Math.cos(yaw) + r * Math.sin(yaw), 2.2 + mouse.y * .35 + pitch * 1.6, r * Math.cos(yaw) - bx * Math.sin(yaw));
   camera.lookAt(0, .12, 0);
