@@ -79,18 +79,16 @@
   .navbar a,.navcta{font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;font-weight:300;letter-spacing:0;text-transform:none}
   .navcta{white-space:nowrap}
   /* CTA: on hover the gradient starts in the circle and grows left into a capsule */
-  .navcta{--ic:40px;--pr:10px;padding-right:var(--pr)}
+  .navcta{--ic:32px;--pr:14px;padding-right:var(--pr)}
   .navcta::before{content:"";position:absolute;z-index:-1;top:50%;right:var(--pr);width:var(--ic);height:var(--ic);border-radius:calc(var(--ic) / 2);transform:translateY(-50%);
-    background-image:var(--grad);background-size:600px 300%;background-position:right 30%;opacity:0;
+    background-image:var(--grad);background-size:600px 300%;background-position:right 65%;opacity:0;
     transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease .5s}
   .navcta:hover::before,.navcta:focus-visible::before{opacity:1;width:calc(100% - var(--pr));transition:width .55s cubic-bezier(.65,0,.25,1),opacity .15s ease}
   .navcta>span:first-child{transition:text-shadow .4s}
   .navcta:hover>span:first-child,.navcta:focus-visible>span:first-child{text-shadow:0 1px 3px rgba(0,0,0,.35)}
   .cta-ic{display:inline-grid;place-items:center;width:var(--ic);height:var(--ic);border-radius:50%;background:#fff;color:#121212;flex:none;transition:background-color .15s ease .5s,color .15s ease .5s}
-  .cta-ic svg{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
   .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{background-color:transparent;color:#fff;transition:background-color .15s ease,color .15s ease}
-  .navcta:hover .cta-ic svg{transform:translateX(2px)}
-  @media (max-width:768px){.navcta{font-size:15px;--ic:36px;--pr:6px}}
+  @media (max-width:768px){.navcta{font-size:15px;--ic:30px;--pr:9px}}
 </style>
 </head>
 <body>
@@ -113,7 +111,7 @@
     <div class="navbar" id="navbar">
       <a href="#">Services</a><a href="#">Process</a><a href="#">Work</a><a href="#">About</a>
     </div>
-    <a class="navcta" href="#"><span>Start a project</span><span class="cta-ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a class="navcta" href="#"><span>Start a project</span><span class="cta-ic" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </nav>
 
   <div class="content wrap">
