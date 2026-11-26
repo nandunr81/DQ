@@ -50,9 +50,9 @@
   .herotitle{flex:1 1 640px;min-width:0}
   .herotitle{display:flex;flex-direction:column;gap:18px}
   .tag{margin:0;color:#D6DADD}
-  .bottombar{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding-top:20px;color:var(--paper)}
+  .bottombar{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding-top:20px;color:var(--paper)}
   .bottombar::before{content:"";position:absolute;top:0;left:50%;width:100vw;height:1px;transform:translateX(-50%);background:rgba(244,245,243,.28)}
-  .bb-group{display:flex;gap:clamp(24px,8vw,180px);align-items:center;flex-wrap:wrap}
+  .bb-group{display:flex;gap:10px clamp(24px,5vw,120px);align-items:center;flex-wrap:wrap}
   .bb-right{justify-self:end}
   .scrollcue{display:inline-flex;align-items:center;gap:14px;min-height:44px;color:var(--c-lede)!important}
   .scrollcue:hover{color:var(--paper)!important}
@@ -114,8 +114,7 @@
       <p class="lede">We design and build websites, digital products and apps — one team from first sketch to launch day. No hand-offs, no gaps — just work that holds up.</p>
     </div>
     <div class="bottombar" id="bottombar">
-      <div class="bb-group"><span>Design + Engineering</span><span>Colombo, Sri Lanka</span></div>
-      <div class="bb-clock" aria-label="Local time in Colombo">[ <i class="dot" aria-hidden="true"></i> <span id="clock">00 : 00 : 00</span> ]</div>
+      <div class="bb-group" aria-label="Our services"><span>Web Design &amp; Development</span><span>App Development</span><span>UI/UX Design</span><span>Logo &amp; Brand Guidelines</span></div>
       <a class="scrollcue bb-right" href="#next" aria-label="Scroll down">
         <span>Scroll</span>
         <svg class="cue" width="14" height="34" viewBox="0 0 14 34" fill="none" aria-hidden="true">
@@ -152,12 +151,6 @@ const GRAD = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwQDAwQ
 document.querySelectorAll('.gimg').forEach(i => i.setAttribute('href', GRAD));
 document.querySelector('.navcta').style.backgroundImage = `url(${GRAD})`;
 
-// live clock in Colombo time
-(function tick(){
-  const t = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Colombo', hour12: false }).split(':').join(' : ');
-  document.getElementById('clock').textContent = t;
-  setTimeout(tick, 1000);
-})();
 
 gsap.registerPlugin(DrawSVGPlugin, SplitText);
 
