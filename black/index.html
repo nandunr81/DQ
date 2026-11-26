@@ -78,14 +78,19 @@
   /* nav type: sentence case, Inter Tight 300 */
   .navbar a,.navcta{font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;font-weight:300;letter-spacing:0;text-transform:none}
   .navcta{white-space:nowrap}
-  /* CTA: only the circle fills with the gradient on hover */
-  .cta-ic{position:relative;isolation:isolate;overflow:hidden;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;color:#121212;flex:none;transition:color .45s cubic-bezier(.2,.8,.2,1)}
-  .cta-ic::before{content:"";position:absolute;inset:0;z-index:-1;background-image:var(--grad);background-size:cover;background-position:center;opacity:0;transition:opacity .45s cubic-bezier(.2,.8,.2,1)}
+  /* CTA: on hover the gradient starts in the circle and grows left into a capsule */
+  .navcta{--ic:40px;--pr:10px;padding-right:var(--pr)}
+  .navcta::before{content:"";position:absolute;z-index:-1;top:50%;right:var(--pr);width:var(--ic);height:var(--ic);border-radius:calc(var(--ic) / 2);transform:translateY(-50%);
+    background-image:var(--grad);background-size:280px 100%;background-position:right center;opacity:0;
+    transition:width .55s cubic-bezier(.65,0,.25,1),opacity .2s ease}
+  .navcta:hover::before,.navcta:focus-visible::before{opacity:1;width:calc(100% - var(--pr))}
+  .navcta>span:first-child{transition:text-shadow .4s}
+  .navcta:hover>span:first-child,.navcta:focus-visible>span:first-child{text-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .cta-ic{display:inline-grid;place-items:center;width:var(--ic);height:var(--ic);border-radius:50%;background:#fff;color:#121212;flex:none;transition:background-color .2s ease,color .2s ease}
   .cta-ic svg{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-  .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{color:#fff}
-  .navcta:hover .cta-ic::before,.navcta:focus-visible .cta-ic::before{opacity:1}
+  .navcta:hover .cta-ic,.navcta:focus-visible .cta-ic{background-color:transparent;color:#fff}
   .navcta:hover .cta-ic svg{transform:translateX(2px)}
-  @media (max-width:768px){.navcta{font-size:15px}.cta-ic{width:36px;height:36px}}
+  @media (max-width:768px){.navcta{font-size:15px;--ic:36px;--pr:6px}}
 </style>
 </head>
 <body>
