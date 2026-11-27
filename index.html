@@ -26,12 +26,15 @@
   @media (max-width:768px){h1{white-space:normal}}
   nav.topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding-top:48px;padding-bottom:24px}
   .home{justify-self:start;display:block}
-  .mono,.navbar a,.tag,.bottombar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .mono,.tag,.bottombar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .navbar a,.navcta{font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;font-weight:500;letter-spacing:.04em;text-transform:none}
+  .navbar a,.navcta{text-transform:uppercase;font-size:14px;letter-spacing:.06em}
+  .navcta{border-radius:0;letter-spacing:.035em}
   .navlogo{display:block;height:40px;width:auto;overflow:visible}
-  .navbar{display:flex;align-items:center;gap:40px;height:60px;padding:0 36px;background:#1C1C1C;border-radius:6px}
+  .navbar{display:flex;align-items:center;gap:40px;height:60px;padding:0 36px}
   .navbar a{text-decoration:none;color:#D6DADD;display:inline-flex;align-items:center;min-height:44px}
   .navbar a:hover{color:var(--paper)}
-  .navcta{justify-self:end;position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:14px;height:60px;padding:0 10px 0 24px;border-radius:999px;text-decoration:none;
+  .navcta{justify-self:end;position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:14px;height:60px;padding:0 10px 0 24px;border-radius:0;text-decoration:none;
     font-family:'Inter Tight',system-ui,sans-serif;font-size:16px;font-weight:500;letter-spacing:0;text-transform:none;color:#fff;background:transparent}
   .navcta:focus-visible,.navbar a:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
   @media (max-width:980px){nav.topbar{grid-template-columns:1fr auto}.navbar{display:none}.navcta{min-width:0}}
@@ -63,17 +66,27 @@
   .dot{width:6px;height:6px;border-radius:50%;background:#FC3224;display:inline-block}
   .eyebrow{margin:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
   h1{margin:0;font-weight:700;font-size:clamp(32px,3.75vw,54px);line-height:1.08;letter-spacing:-0.02em;text-transform:uppercase;max-width:15.5em;text-wrap:balance;color:var(--c-head)}
-    .lede{margin:0;font-size:clamp(18px,1.25vw,24px);line-height:1.4;font-weight:500;letter-spacing:0;color:var(--c-head);max-width:470px;flex:0 1 470px;text-wrap:pretty}
+    .lede{margin:0;font-size:clamp(18px,1.25vw,24px);line-height:1.4;font-weight:400;letter-spacing:0.48px;color:var(--c-head);max-width:470px;flex:0 1 470px;text-wrap:pretty}
   .sub{margin:0;font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:#A9B0B6}
   .sub em{color:var(--paper);font-style:italic}
 
   /* idea 1 — the big mark that builds itself */
   .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
-  .bigmark{width:min(52vw,560px);height:auto;overflow:visible;transform-origin:0 0}
+  .bigmark{width:min(26vw,280px);height:auto;overflow:visible;transform-origin:0 0}
 
   .note{position:fixed;right:20px;bottom:72px;z-index:10;text-align:right;font-size:12px;color:var(--steel);max-width:320px;line-height:1.5}
   @media (max-width:768px){h1{white-space:normal}.bb-clock{display:none}}
   #orb{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;visibility:hidden}
+
+  /* preloader */
+  #preloader{position:fixed;inset:0;z-index:100;background:#121212;color:var(--paper);clip-path:inset(0 0 0 0)}
+  #preloader .pl-count,#preloader .pl-label{position:absolute;top:50%;transform:translateY(-50%)}
+  #preloader .pl-count{left:calc(50% + 14px);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--paper);font-variant-numeric:tabular-nums;text-align:left;min-width:4ch}
+  #preloader .pl-label{right:calc(50% + 14px);text-align:right;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#A9B0B6;white-space:nowrap}
+  #preloader .pl-bar{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:rgba(244,245,243,.12)}
+  #preloader .pl-fill{position:absolute;inset:0;clip-path:inset(100% 0 0 0);background:linear-gradient(0deg,#391C48 0%,#5A1740 12.5%,#A7112A 25%,#DF111D 37.5%,#E82529 50%,#BC6061 62.5%,#7B828A 75%,#497383 87.5%,#32667B 100%)}
+  @media (max-width:767px){#preloader .pl-count{left:calc(50% + 12px)}#preloader .pl-label{right:calc(50% + 12px)}}
+  html.is-loading,html.is-loading body{overflow:hidden}
   @media (max-width:768px){.hbr{display:none}}
   @media (min-width:769px){#headline{max-width:none;white-space:nowrap}}
   /* nav type: sentence case, Inter Tight 300 */
@@ -98,6 +111,69 @@
 </style>
 </head>
 <body>
+<div id="preloader" role="status" aria-live="polite" aria-label="Loading Digi Quarters">
+  <div class="pl-bar" aria-hidden="true"><div class="pl-fill" id="plFill"></div></div>
+  <div class="pl-count" id="plCount">0%</div>
+  <div class="pl-label" id="plLabel">Loading</div>
+</div>
+<script>
+/* Preloader: tracks what the hero really needs, then hands over to the intro.
+   Progress only moves when a task finishes; the counter eases towards it so it never jumps. */
+(function(){
+  document.documentElement.classList.add('is-loading');
+  const tasks = { dom: 10, fonts: 25, libs: 15, background: 35, page: 15 };
+  const done = {};
+  let target = 0, shown = 0, finished = false, startedAt = performance.now();
+  let resolveReady; window.DQ_READY = new Promise(r => resolveReady = r);
+  const countEl = document.getElementById('plCount'), fillEl = document.getElementById('plFill'), labelEl = document.getElementById('plLabel');
+  const labels = { dom: 'Structure', fonts: 'Type', libs: 'Motion', background: '3D scene', page: 'Assets' };
+
+  window.DQ_PRELOAD = function(name){
+    if (done[name] || !(name in tasks)) return;
+    done[name] = true;
+    target = Object.keys(done).reduce((a, k) => a + tasks[k], 0);
+    const next = Object.keys(tasks).find(k => !done[k]);
+    labelEl.textContent = next ? 'Loading ' + labels[next].toLowerCase() : 'Ready';
+  };
+
+  let last = performance.now();
+  function frame(now){
+    const dt = Math.min((now - last) / 1000, .1); last = now;
+    shown += (target - shown) * (1 - Math.exp(-dt * 7));   // time-based, so slow devices still finish on time
+    if (target - shown < .4) shown = target;
+    const v = Math.round(shown);
+    countEl.textContent = v + '%';
+    fillEl.style.clipPath = 'inset(' + (100 - shown) + '% 0 0 0)';
+    if (v >= 100 && !finished) { finished = true; exit(); return; }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function exit(){
+    const wait = Math.max(0, 900 - (performance.now() - startedAt));   // avoid a flash on fast connections
+    setTimeout(() => {
+      const el = document.getElementById('preloader');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.documentElement.classList.remove('is-loading');
+      resolveReady();
+      if (window.gsap && !reduce) {
+        gsap.to(el, { clipPath: 'inset(0 0 100% 0)', duration: .9, ease: 'power3.inOut', onComplete: () => el.remove() });
+      } else { el.remove(); }
+    }, wait + 250);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    DQ_PRELOAD('dom');
+    if (window.gsap && window.SplitText && window.DrawSVGPlugin) DQ_PRELOAD('libs');
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => DQ_PRELOAD('fonts'));
+  });
+  window.addEventListener('load', () => DQ_PRELOAD('page'));
+  window.addEventListener('dq:bg', () => DQ_PRELOAD('background'));
+  if (!('WebGLRenderingContext' in window)) DQ_PRELOAD('background');
+  // safety net: never hold visitors for more than 8s, e.g. if WebGL or a CDN fails
+  setTimeout(() => Object.keys(tasks).forEach(k => DQ_PRELOAD(k)), 8000);
+})();
+</script>
 <section class="hero" id="hero">
   <canvas id="orb" aria-hidden="true"></canvas>
 
@@ -124,7 +200,6 @@
   <div class="content wrap">
     <div class="herorow">
       <div class="herotitle">
-        <p class="tag">[ Your digital quarters ]</p>
         <h1 id="headline">Your next website,<br class="hbr"> app or brand starts here,<br class="hbr"> and it starts properly</h1>
       </div>
       <p class="lede">We design and build websites, digital products and apps — one team from first sketch to launch day. No hand-offs, no gaps — just work that holds up.</p>
@@ -182,7 +257,7 @@ gsap.registerPlugin(DrawSVGPlugin, SplitText);
 })();
 
 // split the headline once; mark the last word for the gradient sweep
-document.fonts.ready.then(() => {
+document.fonts.ready.then(() => window.DQ_READY).then(() => {
   const head = SplitText.create('#headline', { type: 'words,chars' });
   const lede = SplitText.create('.lede', { type: 'words' });
   window.__chars = head.chars;
@@ -208,7 +283,7 @@ function init(){
 
   mm.add('(prefers-reduced-motion: reduce)', () => {
     gsap.set('#bigmark', { autoAlpha: 0 });
-    gsap.set(['#orb', '#navmark', '#wordmark path', '.navbar', '.navcta', '.tag', '#bottombar', window.__chars, window.__lede], { autoAlpha: 1, clearProps: 'transform' });
+    gsap.set(['#orb', '#navmark', '#wordmark path', '.navbar', '.navcta', '#bottombar', window.__chars, window.__lede], { autoAlpha: 1, clearProps: 'transform' });
     gsap.set('#nwave', { y: 0 });
     gsap.set([window.__chars, window.__lede], { filter: 'none' });
   });
@@ -233,7 +308,7 @@ function playIntro(){
   gsap.set(wave, { y: 250, x: 0 });
   gsap.set(['#navmark', '#orb'], { autoAlpha: 0 });
   gsap.set(links, { autoAlpha: 0, y: -14 });
-  gsap.set(['.tag', '#bottombar'], { autoAlpha: 0 });
+  gsap.set(['#bottombar'], { autoAlpha: 0 });
   gsap.set('#bottombar', { y: 16 });
   gsap.set(letters, { autoAlpha: 0, y: 60 });
   gsap.set([chars, ledeWords], { autoAlpha: 0, filter: 'blur(14px)', y: 6 });
@@ -262,7 +337,6 @@ function playIntro(){
        .to(links, { autoAlpha: 1, y: 0, duration: .7, stagger: .07 }, 'dock+=1.6')
   // headline and line two resolve from blur to clear
        .to(chars, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.1, stagger: .035, ease: 'power2.out' }, 'dock+=1.8')
-       .to('.tag', { autoAlpha: 1, duration: .6 }, 'dock+=1.7')
        .to(ledeWords, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, stagger: .05, ease: 'power2.out' }, '-=.7')
        .to('#bottombar', { autoAlpha: 1, y: 0, duration: .8 }, '-=.6')
        .add(startGlow, 'dock+=3.2')
@@ -300,9 +374,9 @@ renderer.setClearColor(0x121212, 1);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
 camera.position.set(0, 2.2, 6.5);
-camera.lookAt(0, -0.4, 0);
+camera.lookAt(0, .12, 0);
 
-const tex = new THREE.TextureLoader().load(GRAD, () => render());
+const tex = new THREE.TextureLoader().load(GRAD, () => { renderer.compile(scene, camera); render(); window.dispatchEvent(new Event('dq:bg')); });
 tex.colorSpace = THREE.SRGBColorSpace;
 tex.wrapS = tex.wrapT = THREE.MirroredRepeatWrapping;
 
@@ -328,19 +402,28 @@ float snoise(vec3 v){
 
 const uniforms = {
   uTime: { value: 0 }, uTex: { value: tex },
-  uMouse: { value: new THREE.Vector2(0, 0) }, uRes: { value: new THREE.Vector2(1, 1) }
+  uMouse: { value: new THREE.Vector2(0, 0) }, uPush: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) }
 };
-const mat = new THREE.ShaderMaterial({
-  uniforms, side: THREE.DoubleSide,
+// where the silk fades out: an organic island, softly broken at its border
+const EDGE = `
+  float silkMask(vec2 uv, float t){
+    vec2 c = (uv - vec2(.56, .5)) * vec2(1.9, 2.25);
+    float e = length(c) + snoise(vec3(uv * 3.2, t * .06)) * .16;
+    return smoothstep(.98, .62, e);
+  }`;
+function silkMaterial(seed, dim, fadeNear, fadeFar){
+ return new THREE.ShaderMaterial({
+  uniforms: { ...uniforms, uSeed: { value: seed }, uDim: { value: dim }, uFade: { value: new THREE.Vector2(fadeNear, fadeFar) } },
+  side: THREE.DoubleSide, transparent: true, depthWrite: false,
   vertexShader: NOISE + `
-    uniform float uTime; uniform vec2 uMouse;
+    uniform float uTime; uniform vec2 uMouse; uniform float uSeed; uniform float uPush;
     varying vec3 vWorld; varying vec2 vUv; varying float vH; varying vec3 vN;
     float H(vec2 q){
       float t = uTime * .1;
-      float h = snoise(vec3(q.x * .2, q.y * .32, t)) * .75
-              + snoise(vec3(q.x * .45 + t, q.y * .55, t * 1.3)) * .18;
-      float d = distance(q, uMouse * vec2(6., 3.5));
-      return h + exp(-d * d * .3) * .4;
+      float h = snoise(vec3(q.x * .2 + uSeed, q.y * .32, t)) * .75
+              + snoise(vec3(q.x * .45 + t, q.y * .55 + uSeed, t * 1.3)) * .18;
+      float d = distance(q, uMouse);
+      return h + exp(-d * d * (.3 - uPush * .14)) * (.4 + uPush * 1.1);
     }
     void main(){
       vec3 p = position;
@@ -355,8 +438,8 @@ const mat = new THREE.ShaderMaterial({
       vWorld = w.xyz;
       gl_Position = projectionMatrix * viewMatrix * w;
     }`,
-  fragmentShader: `
-    uniform sampler2D uTex; uniform float uTime; uniform vec2 uRes;
+  fragmentShader: NOISE + EDGE + `
+    uniform sampler2D uTex; uniform float uTime; uniform vec2 uRes; uniform float uDim; uniform vec2 uFade;
     varying vec3 vWorld; varying vec2 vUv; varying float vH; varying vec3 vN;
     void main(){
       vec3 n = normalize(vN);
@@ -369,22 +452,32 @@ const mat = new THREE.ShaderMaterial({
       float fres = pow(1. - max(dot(n, v), 0.), 3.);
       col = col * (.12 + .62 * diff) + spec * .12 + col * fres * .25;
       float dist = length(cameraPosition - vWorld);
-      col *= smoothstep(13., 5., dist);
+      col *= smoothstep(uFade.y, uFade.x, dist) * uDim;
       vec2 s = gl_FragCoord.xy / uRes;
       // keep the headline area (bottom-left) and the top band dark
       float keep = smoothstep(.2, 1.05, s.x * .9 + s.y * .4);
       col *= mix(.06, 1., keep * keep);
-      col *= smoothstep(1., .62, s.y);
+      col *= smoothstep(.75, .6, s.y);
       col *= .8;
-      col = max(col, vec3(.006));
-      gl_FragColor = vec4(col, 1.);
+      float a = smoothstep(0., .08, vUv.x) * smoothstep(1., .92, vUv.x) * smoothstep(1., .9, vUv.y);
+      gl_FragColor = vec4(col, a);
       #include <colorspace_fragment>
     }`
-});
-const surface = new THREE.Mesh(new THREE.PlaneGeometry(16, 9, 320, 180), mat);
+ });
+}
+// far layer: wider, further back, dimmer, its own waves — sits behind and above the main sheet
+const far = new THREE.Mesh(new THREE.PlaneGeometry(30, 12, 300, 120), silkMaterial(17.3, .55, 6., 22.));
+far.rotation.x = -Math.PI / 2.2;
+far.position.set(0, -.55, -7);
+scene.add(far);
+// main layer
+const surface = new THREE.Mesh(new THREE.PlaneGeometry(18, 9, 320, 180), silkMaterial(0., 1., 4.5, 13.));
 surface.rotation.x = -Math.PI / 2.35;
-surface.position.y = -0.9;
+surface.position.y = -1.25;
 scene.add(surface);
+
+
+
 scene.fog = null;
 
 function layout(){
@@ -405,13 +498,31 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clock = new THREE.Clock();
 let running = true;
 document.addEventListener('visibilitychange', () => { running = !document.hidden; if (running && !reduce) tick(); });
+const ray = new THREE.Raycaster(), proxy = new THREE.Mesh(new THREE.PlaneGeometry(40, 40));
+proxy.rotation.copy(surface.rotation); proxy.position.copy(surface.position); proxy.updateMatrixWorld();
+const aim = new THREE.Vector2(0, 0), pos = new THREE.Vector2(0, 0);
+const fine = matchMedia('(pointer: fine)').matches;
+let press = 0, yaw = 0, pitch = 0;
+const prev = new THREE.Vector2();
 function tick(){
   if (!running) return;
   uniforms.uTime.value = clock.getElapsedTime();
-  mouse.lerp(target, .04);
-  uniforms.uMouse.value.copy(mouse);
-  camera.position.x = mouse.x * .35;
-  camera.lookAt(0, -0.4, 0);
+  ray.setFromCamera(target, camera);
+  const hit = ray.intersectObject(proxy)[0];
+  if (hit) { const l = proxy.worldToLocal(hit.point.clone()); aim.set(l.x, l.y); }
+  // the swell follows the cursor smoothly, without overshoot
+  pos.lerp(aim, .04);
+  uniforms.uMouse.value.copy(pos);
+  mouse.lerp(target, .035);
+  // cursor movement alone steers the view and lifts the silk; moving faster lifts it more
+  const speed = fine ? Math.min(target.distanceTo(prev) * 22, 1) : 0; prev.copy(target);
+  press += (Math.max(speed, fine ? .35 : 0) - press) * .05;
+  uniforms.uPush.value = press;
+  yaw += ((fine ? -target.x * .55 : 0) - yaw) * .04;
+  pitch += ((fine ? target.y * .35 : 0) - pitch) * .04;
+  const r = 6.5, bx = mouse.x * 1.1;
+  camera.position.set(bx * Math.cos(yaw) + r * Math.sin(yaw), 2.2 + mouse.y * .35 + pitch * 1.6, r * Math.cos(yaw) - bx * Math.sin(yaw));
+  camera.lookAt(0, .12, 0);
   render();
   requestAnimationFrame(tick);
 }
